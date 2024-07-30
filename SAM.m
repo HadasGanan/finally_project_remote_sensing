@@ -1,14 +1,12 @@
-clc
 close all force
-fullname = "tree(5-15).mat";
-temp = load(fullname);
-fn = fieldnames(temp);
-MM = temp.(fn{1});
-MM = rot90(MM, 3);
-fullname = "wavelengths.mat";
-temp = load(fullname);
-fn = fieldnames(temp);
-Wvl = temp.(fn{1});
+
+
+[MM, normalized, minVal] = loadAndNormalize("tree(4-11).mat");
+fullname = "עותק של wavelengths.mat";
+    temp = load(fullname);
+    fn = fieldnames(temp);
+    Wvl = temp.(fn{1});
+
 
 info = enviinfo("coverCrop.hdr");
 endmem = multibandread('coverCrop.sli',...
@@ -18,15 +16,13 @@ endmem = transpose(endmem);
 endmemnam = info.SpectraNames;
 firstBand = 1;
 lastBand = 100;
-threshold = 0.05;
+threshold = 0.10;
 endmem = endmem(firstBand:lastBand, :);
 MM = MM(:, :, firstBand:lastBand);
 Wvl = Wvl(firstBand:lastBand, :);
 
 %normalize reflectance hyperspectral image
-minVal = min(MM(:));
-maxVal = max(MM(:));
-normalizedM = MM - minVal;
+
 endmem = endmem - minVal;
 
 
@@ -47,7 +43,7 @@ selectedsamRadians = zeros(1,N);
 selectedsammap = reshape(selectedsamRadians,w,h);
 
 figure
-subplot(2,2,1),image(imread("tree(5-15).png")),title('RGB image')
+subplot(2,2,1),image(imread("1_2814.png")),title('RGB image')
 subplot(2,2,2),plot(Wvl,roispec), title('Selected pixel spectrum')
 subplot(2,2,3),imagesc(selectedsammap),title('SAM map')
 S = selectedsammap > threshold;
@@ -55,23 +51,3 @@ selectedsammap(S) = 1;
 colormap("sky")
 subplot(2,2,4),imagesc(selectedsammap),title('SAM map with threshold')
 datacursormode on
-
-
-% Count the number of zeros in the binary matrix S
-numZeros = sum(S(:) == 0);
-
-% Count the number of zeros in the binary matrix S
-numZeros = sum(S(:) == 0);
-
-% Calculate the total number of elements in the matrix S
-totalElements = numel(S);
-
-% Calculate the percentage of zeros
-percentageZeros = (numZeros / totalElements) * 100;
-
-% Display the result
-disp(['Number of zeros in S: ', num2str(numZeros)]);
-disp(['Percentage of zeros in S: ', num2str(percentageZeros), '%']);
-
-
-
