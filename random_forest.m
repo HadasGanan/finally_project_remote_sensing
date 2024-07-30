@@ -1,3 +1,4 @@
+clc
 close all force
 trained = 0;
 %uncomment to reset training data
@@ -33,6 +34,22 @@ datacursormode on
 % figure
 % rescalePC = rescale(reducedDataCube,0,1);
 % montage(rescalePC,'BorderSize',[10 10],'Size',[1 sizepca(3)]);
+
+% Count the number of zeros in the binary matrix y_square
+numZeros = sum(y_square(:) == 1);
+
+% Count the number of zeros in the binary matrix y_square
+numZeros = sum(y_square(:) == 1);
+
+% Calculate the total number of elements in the matrix y_square
+totalElements = numel(y_square);
+
+% Calculate the percentage of zeros
+percentageZeros = (numZeros / totalElements) * 100;
+
+% Display the result
+disp(['Number of zeros in y_square: ', num2str(numZeros)]);
+disp(['Percentage of zeros in y_square: ', num2str(percentageZeros), '%']);
 
 
 
@@ -70,3 +87,8 @@ function [trainingData, trainingResult, pca] = createTrainingData(dataMatrix, im
     trainingResult = result;
     pca = reducedDataCube;
 end
+
+
+
+
+
