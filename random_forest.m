@@ -1,4 +1,3 @@
-clc
 close all force
 trainingData = load("trainingData.mat").trainingData;
 trainingResult = load("trainingResult.mat").trainingResult;
@@ -44,23 +43,6 @@ subplot(1,2,1), image(I),title('RGB image')
 colormap("sky")
 subplot(1,2,2),imagesc(y_square),title('predicted')
 datacursormode on
-
-% Count the number of zeros in the binary matrix y_square
-numZeros = sum(y_square(:) == 1);
-
-% Count the number of zeros in the binary matrix y_square
-numZeros = sum(y_square(:) == 1);
-
-% Calculate the total number of elements in the matrix y_square
-totalElements = numel(y_square);
-
-% Calculate the percentage of zeros
-percentageZeros = (numZeros / totalElements) * 100;
-
-% Display the result
-disp(['Number of zeros in y_square: ', num2str(numZeros)]);
-disp(['Percentage of zeros in y_square: ', num2str(percentageZeros), '%']);
-
 
 % figure
 % rescalePC = rescale(pca,0,1);
